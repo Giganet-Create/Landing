@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giganet — Internet y Cable de Alta Velocidad</title>
+<meta name="description" content="Conéctate al futuro con Giganet en Estados Unidos. Planes desde $35/mes. Instalación gratis en plan anual. Soporte 24/7.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e11; --ink:#f6f6f8; --muted:#b9bcc8; --line:rgba(255,255,255,.12);
+    --orange:#ff6a00; --orange-2:#ff8a33; --black:#0c0c10;
+    --glow:0 0 40px rgba(255,106,0,.25), 0 0 80px rgba(255,138,51,.18);
+    --shadow:0 30px 70px rgba(0,0,0,.45);
+    --radius:16px; --radius-lg:22px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 800px at 80% -20%, rgba(255,106,0,.15), transparent 60%),
+      radial-gradient(900px 700px at -10% 30%, rgba(255,138,51,.14), transparent 60%),
+      linear-gradient(135deg, #0d0d12 10%, #141318 45%, #101622 100%);
+    overflow-x:hidden;
+  }
+  .bg-veil::before{content:""; position:fixed; inset:-10vmax; z-index:-2; pointer-events:none;
+    background:conic-gradient(from 0deg, rgba(255,106,0,.25), rgba(255,138,51,.18), rgba(255,106,0,.25));
+    filter:blur(120px) saturate(140%); animation:spin 22s linear infinite;}
+  @keyframes spin{to{transform:rotate(1turn)}}
+  a{color:#ffd7be; text-decoration:none} a:hover{text-decoration:underline}
+  img{max-width:100%; display:block}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 20px}
+
+  .topbar{position:sticky; top:0; z-index:100; backdrop-filter: blur(10px);
+    background:linear-gradient(135deg, rgba(10,10,20,.85), rgba(10,10,25,.55));
+    border-bottom:1px solid var(--line); box-shadow:0 10px 30px rgba(0,0,0,.5);}
+  .topbar .inner{display:flex; gap:12px; align-items:center; justify-content:space-between; padding:10px 14px; flex-wrap:wrap}
+  .badge{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; font-weight:800;
+    background:linear-gradient(135deg, rgba(255,106,0,.25), rgba(255,138,51,.25)); border:1px solid rgba(255,255,255,.25); box-shadow:var(--glow); color:#fff}
+  .timer{font-variant-numeric:tabular-nums; font-weight:900; letter-spacing:.4px}
+
+  .muted{color:var(--muted)} .center{text-align:center}
+  .grid{display:grid; gap:18px}
+  .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  @media (max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr}}
+
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+  .card.glow::before{content:""; position:absolute; inset:-2px; background:linear-gradient(135deg, rgba(255,106,0,.7), rgba(255,138,51,.7)); filter:blur(24px); opacity:.12; z-index:-1}
+
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 20px; border-radius:14px;
+    font-weight:900; letter-spacing:.2px; color:#0a0f17; background:
+    radial-gradient(80% 220% at 50% 0%, rgba(255,255,255,.65), transparent 40%),
+    linear-gradient(135deg, var(--orange), var(--orange-2));
+    border:none; box-shadow:var(--glow); cursor:pointer; transition: transform .2s ease, filter .2s ease; text-decoration:none}
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.05)}
+  .btn.block{display:flex; width:100%}
+  .btn.outline{color:var(--ink); background:transparent; border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(6px)}
+
+  section{padding:70px 0}
+  .section-title{font-size:clamp(26px,4vw,40px); margin:0 0 10px}
+  .section-lead{color:#ffe9dc; margin:0 0 24px; font-size:18px}
+
+  .hero{padding:24px 0 30px}
+  .hero h1{font-size:clamp(34px,6vw,60px); line-height:1.02; margin:10px 0 8px}
+  .sub{font-size:clamp(16px,2.2vw,22px); color:#ffe1cf}
+
+  .pricing{display:grid; gap:18px; grid-template-columns:repeat(2,minmax(0,1fr))}
+  @media (max-width:800px){.pricing{grid-template-columns:1fr}}
+  .pcard{border:1px solid var(--line); border-radius:18px; padding:22px; background:rgba(255,255,255,.03)}
+  .pcard h3{margin:0 0 6px}
+  .big{font-size:46px; font-weight:900}
+
+  /* Formulario */
+  .form{display:grid; gap:12px}
+  .form .row{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+  @media (max-width:800px){.form .row{grid-template-columns:1fr}}
+  .form label{font-weight:600; font-size:14px}
+  .form input, .form select, .form textarea{
+    padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--ink)
+  }
+  .hint{font-size:13px; color:#ffd5c1}
+
+  .testi{display:flex; gap:14px; align-items:flex-start}
+  .testi img{width:64px; height:64px; object-fit:contain}
+  footer{padding:40px 0 60px}
+  /* Brand in topbar */
+  .brand{display:flex; align-items:center; gap:10px}
+  .brand-logo{width:42px; height:42px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid var(--line); display:grid; place-items:center; overflow:hidden}
+  .brand-logo img{width:100%; height:100%; object-fit:cover}
+  .brand-name{font-weight:900; font-size:18px}
+  .promo{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+  .pcard-link{display:block; color:inherit; text-decoration:none}
+</style>
+</head>
+<body class="bg-veil">
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap inner">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="https://i.postimg.cc/j2DL1c02/Whats-App-Image-2025-08-19-at-1-05-28-PM.jpg" alt="GigaNet">
+      </div>
+      <span class="brand-name">GigaNet</span>
+    </div>
+    <div class="promo">
+      <span class="badge">⚡ Promoción de lanzamiento</span>
+      <span class="muted">Termina en</span>
+      <span class="timer" id="topTimer">00:00:00</span>
+      <a href="#contacto" class="btn">Solicitar instalación</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero wrap" style="background-image:linear-gradient( to bottom right, rgba(0,0,0,.55), rgba(0,0,0,.35) ), url('https://www.shutterstock.com/image-photo/adult-couple-man-woman-husband-260nw-2438226953.jpg'); background-size:cover; background-position:center; border-radius:22px; overflow:hidden;">
+  <div style="display:flex; gap:18px; align-items:center; flex-wrap:wrap">
+  
+    <div class="badge">Internet + Cable sin interrupciones</div>
+  </div>
+  <h1>Conéctate al futuro con <span style="color:var(--orange)">Giganet</span></h1>
+  <p class="sub">Cobertura en EE. UU. Velocidad real, confiabilidad y soporte 24/7.</p>
+
+  <!-- Pricing -->
+  <section class="pricing" style="padding:20px 0 0">
+    <a href="#contacto" class="pcard-link"><div class="pcard card glow">
+      <h3>Plan <span style=\"color:var(--orange)\">Anual</span></h3>
+      <div class="big">$200</div>
+      <p><strong>Instalación GRATIS</strong> • Router Wi‑Fi incluido</p>
+      <ul class="muted">
+        <li>Hasta 200 Mbps simétricos</li>
+        <li>TV por cable HD</li>
+        <li>Soporte técnico prioritario</li>
+      </ul>
+    </div></a>
+    <a href="#contacto" class="pcard-link"><div class="pcard card glow">
+      <h3>Plan <span style=\"color:var(--orange)\">Mensual</span></h3>
+      <div class="big">$35</div>
+      <p>Instalación <strong>$30</strong></p>
+      <ul class="muted">
+        <li>Hasta 100 Mbps</li>
+        <li>Sin contratos forzosos</li>
+        <li>Actualiza cuando quieras</li>
+      </ul>
+    </div></a>
+  </section>
+</header>
+
+<main>
+  <!-- Beneficios -->
+  <section class="wrap">
+    <h2 class="section-title">¿Por qué Giganet?</h2>
+    <p class="section-lead">Tecnología de última generación para que navegues sin límites.</p>
+    <div class="grid grid-3">
+      <div class="card glow">
+        <h3>Velocidad & confiabilidad</h3>
+        <p class="muted">Latencia baja y ancho de banda estable incluso en horas pico.</p>
+      </div>
+      <div class="card glow">
+        <h3>Soporte 24/7</h3>
+        <p class="muted">Atención por WhatsApp y teléfono todo el año.</p>
+      </div>
+      <div class="card glow">
+        <h3>Instalación rápida</h3>
+        <p class="muted">Agenda en minutos y recibe a nuestro técnico en tu horario.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -> WHATSAPP (EE. UU.) -->
+  <section class="wrap" id="contacto">
+    <div class="card glow" style="padding:28px">
+      <h2 class="section-title" style="margin-bottom:6px">Solicita tu instalación (Estados Unidos)</h2>
+      <p class="muted" style="margin-top:0">Completa el formulario y te contactaremos por WhatsApp para confirmar.</p>
+
+      <form id="gigaForm" class="form" novalidate>
+        <div class="row">
+          <div>
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" required placeholder="Ana / John">
+          </div>
+          <div>
+            <label for="apellido">Apellido</label>
+            <input id="apellido" name="apellido" required placeholder="Pérez / Smith">
+          </div>
+        </div>
+
+        <div>
+          <label for="calle">Calle y número</label>
+          <input id="calle" name="calle" required placeholder="123 Main St">
+        </div>
+
+        <div>
+          <label for="direccion2">Dirección (continuación)</label>
+          <input id="direccion2" name="direccion2" placeholder="Apt 4B, Building, etc.">
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="ciudad">Ciudad</label>
+            <input id="ciudad" name="ciudad" required placeholder="Miami">
+          </div>
+          <div>
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado" required>
+              <option value="" selected disabled>Selecciona el estado</option>
+              <option>Alabama (AL)</option>
+              <option>Alaska (AK)</option>
+              <option>Arizona (AZ)</option>
+              <option>Arkansas (AR)</option>
+              <option>California (CA)</option>
+              <option>Colorado (CO)</option>
+              <option>Connecticut (CT)</option>
+              <option>Delaware (DE)</option>
+              <option>District of Columbia (DC)</option>
+              <option>Florida (FL)</option>
+              <option>Georgia (GA)</option>
+              <option>Hawaii (HI)</option>
+              <option>Idaho (ID)</option>
+              <option>Illinois (IL)</option>
+              <option>Indiana (IN)</option>
+              <option>Iowa (IA)</option>
+              <option>Kansas (KS)</option>
+              <option>Kentucky (KY)</option>
+              <option>Louisiana (LA)</option>
+              <option>Maine (ME)</option>
+              <option>Maryland (MD)</option>
+              <option>Massachusetts (MA)</option>
+              <option>Michigan (MI)</option>
+              <option>Minnesota (MN)</option>
+              <option>Mississippi (MS)</option>
+              <option>Missouri (MO)</option>
+              <option>Montana (MT)</option>
+              <option>Nebraska (NE)</option>
+              <option>Nevada (NV)</option>
+              <option>New Hampshire (NH)</option>
+              <option>New Jersey (NJ)</option>
+              <option>New Mexico (NM)</option>
+              <option>New York (NY)</option>
+              <option>North Carolina (NC)</option>
+              <option>North Dakota (ND)</option>
+              <option>Ohio (OH)</option>
+              <option>Oklahoma (OK)</option>
+              <option>Oregon (OR)</option>
+              <option>Pennsylvania (PA)</option>
+              <option>Rhode Island (RI)</option>
+              <option>South Carolina (SC)</option>
+              <option>South Dakota (SD)</option>
+              <option>Tennessee (TN)</option>
+              <option>Texas (TX)</option>
+              <option>Utah (UT)</option>
+              <option>Vermont (VT)</option>
+              <option>Virginia (VA)</option>
+              <option>Washington (WA)</option>
+              <option>West Virginia (WV)</option>
+              <option>Wisconsin (WI)</option>
+              <option>Wyoming (WY)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="zip">ZIP Code</label>
+            <input id="zip" name="zip" required inputmode="numeric" pattern="^[0-9]{5}(?:-[0-9]{4})?$" placeholder="33101">
+            <div class="hint">Formato 5 dígitos o ZIP+4 (ej. 33101-1234)</div>
+          </div>
+          <div>
+            <label for="movil">Móvil (EE. UU.)</label>
+            <input id="movil" name="movil" required inputmode="tel" pattern="^(\+1)?[0-9 ()\-]{10,}$" placeholder="+1 786 555 1234">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="email">Correo electrónico</label>
+            <input id="email" name="email" type="email" required placeholder="tucorreo@dominio.com">
+          </div>
+          <div>
+            <label for="plan">Plan de interés</label>
+            <select id="plan" name="plan" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option>Mensual $35 (instalación $30)</option>
+              <option>Anual $200 (instalación GRATIS)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="comentario">Comentarios</label>
+          <textarea id="comentario" name="comentario" rows="3" placeholder="Horario preferido, referencias, etc."></textarea>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+          <button class="btn" type="submit">Enviar por WhatsApp</button>
+          <a class="btn outline" href="tel:+13035003756">Llamar ahora</a>
+          <span class="muted" id="formMsg" style="display:none"></span>
+        </div>
+      </form>
+      <p class="muted" style="margin-top:12px">Al enviar aceptas ser contactad@ para completar tu contratación.</p>
+    </div>
+  </section>
+
+  <!-- Reseñas con fotos -->
+  <section class="wrap">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <div class="grid grid-3">
+      <div class="card testi glow">
+        <img src="https://png.pngtree.com/png-clipart/20241102/original/pngtree-woman-modern-formal-business-png-image_16668221.png" alt="Ana">
+        <div>
+          <strong>Ana</strong><br>
+          <span class="muted">“Instalación rápida y el Wi-Fi vuela. El soporte por WhatsApp responde de una vez.”</span>
+        </div>
+      </div>
+      <div class="card testi glow">
+        <img src="https://i.postimg.cc/kGGfh0gS/76b30b5d-fc6a-461d-8cc4-410db714dd0a-removalai-preview.png" alt="Lucia">
+        <div>
+          <strong>Lucia</strong><br>
+          <span class="muted">“Streaming en 4K sin cortes y el cable con muchos canales en HD.”</span>
+        </div>
+      </div>
+      <div class="card testi glow">
+        <img src="https://i.postimg.cc/fLJ8H4L9/3c7dad06-c12d-4bea-b630-4c5d901c93bd-removalai-preview.png" alt="Augusto">
+        <div>
+          <strong>Augusto</strong><br>
+          <span class="muted">“Pasé del plan mensual al anual por el precio y la estabilidad. Recomendado.”</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="center muted">©️ <span id="year"></span> Giganet. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+/* ========= Configura tu WhatsApp =========
+   Coloca tu número en formato internacional SIN +. Ej.: 17865551234
+*/
+const WHATSAPP_NUMBER = "17865551234"; // <- CAMBIA ESTE NÚMERO
+const WHATSAPP_PRETEXT = "Hola, quiero contratar Giganet. Estos son mis datos:";
+
+/* ====== Timer (24h) ====== */
+(function(){
+  const key='giganet_deadline_24h';
+  let end = localStorage.getItem(key);
+  if(!end){ const d=new Date(); d.setDate(d.getDate()+1); end=d.getTime(); localStorage.setItem(key,end); }
+  else end=+end;
+  const el=document.getElementById('topTimer');
+  function tick(){
+    const now=Date.now(); let diff=Math.max(0,end-now);
+    const h=Math.floor(diff/3600000); diff%=3600000;
+    const m=Math.floor(diff/60000);   diff%=60000;
+    const s=Math.floor(diff/1000);
+    const fmt=n=>String(n).padStart(2,'0');
+    el.textContent = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
+    requestAnimationFrame(()=>setTimeout(tick,250));
+  }
+  tick();
+})();
+
+/* ====== Form -> WhatsApp (EE. UU.) ====== */
+(function(){
+  const f = document.getElementById('gigaForm');
+  const msgEl = document.getElementById('formMsg');
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  const zipRe = /^[0-9]{5}(?:-[0-9]{4})?$/;
+  const phoneRe = /^(\+1)?[0-9 ()\-]{10,}$/;
+
+  function val(id){ return (document.getElementById(id)?.value || "").trim(); }
+  function error(txt){ msgEl.style.display='inline'; msgEl.style.color='#ffb3b3'; msgEl.textContent=txt; }
+  function ok(txt){ msgEl.style.display='inline'; msgEl.style.color='#c8ffd0'; msgEl.textContent=txt; }
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault(); msgEl.style.display='none';
+
+    const data = {
+      nombre: val('nombre'),
+      apellido: val('apellido'),
+      calle: val('calle'),
+      direccion2: val('direccion2'),
+      ciudad: val('ciudad'),
+      estado: val('estado'),
+      zip: val('zip'),
+      movil: val('movil'),
+      email: val('email'),
+      plan: val('plan'),
+      comentario: val('comentario')
+    };
+
+    if(!data.nombre || !data.apellido) return error("Completa nombre y apellido.");
+    if(!data.calle || !data.ciudad || !data.estado || !data.zip) return error("Completa tu dirección completa.");
+    if(!zipRe.test(data.zip)) return error("ZIP inválido. Usa 5 dígitos o ZIP+4.");
+    if(!emailRe.test(data.email)) return error("Ingresa un correo válido.");
+    if(!phoneRe.test(data.movil)) return error("Ingresa un móvil válido de EE. UU. (puede iniciar con +1).");
+    if(!data.plan) return error("Selecciona un plan.");
+
+    const texto =
+`${WHATSAPP_PRETEXT}
+
+Nombre: ${data.nombre} ${data.apellido}
+Dirección: ${data.calle}${data.direccion2 ? ", " + data.direccion2 : ""}
+Ciudad: ${data.ciudad}
+Estado: ${data.estado}
+ZIP: ${data.zip}
+Móvil: ${data.movil}
+Email: ${data.email}
+Plan de interés: ${data.plan}
+Comentarios: ${data.comentario || "N/A"}`;
+
+    const url = `https://wa.me/18098362943`;
+    ok("Abriendo WhatsApp…");
+    window.open(url, "_blank", "noopener");
+  });
+})();
+
+/* Año */
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
